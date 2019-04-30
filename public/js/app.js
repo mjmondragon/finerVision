@@ -62849,7 +62849,11 @@ function (_Component) {
       })["catch"](function (error) {
         console.log(error.response);
 
-        if (error.response.status == 422) {}
+        if (error.response.status == 422) {
+          self.setState({
+            hasValidationError: true
+          });
+        }
       });
     }
   }, {

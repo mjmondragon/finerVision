@@ -136,7 +136,7 @@ class CollapsePanel extends Component{
             .catch(function (error) {
                 console.log(error.response);
                 if(error.response.status == 422){
-
+                    self.setState({hasValidationError: true});
                 }
             });
     }
