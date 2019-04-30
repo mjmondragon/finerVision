@@ -1,0 +1,55 @@
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.navbar-laravel {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.panel {
+    padding: 4px;
+    border-radius: 6px;
+    box-shadow: 1px 1px 20px 6px rgba($color: #000000, $alpha: 0.3);
+}
+.btn{
+    color: #fff;
+}
+.bg-gray{
+    background-color: $gray;
+}
+.display-flex{
+    display: flex;
+}
+.flex-direction-column{
+    flex-direction: column;
+}
+.btn-secondary {
+    border-radius: 13px;
+    padding: 3px 32px;
+}
+.btn-primary{
+    padding: 14px 15px;
+}
+.form-control {
+    box-shadow: inset 1px 1px 9px 1px rgba($color: #000000, $alpha: 0.3);
+}
+label{
+    font-weight: 500;
+    color: #000;
+    font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    margin-bottom: 0.3rem;
+}
+.form-group{
+    &.input-validation-error{
+        label{
+            color: $red;
+        }
+        .form-control{
+            border-color: $red;
+        }
+    }
+}
