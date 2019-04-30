@@ -7,7 +7,7 @@ export class App extends Component{
         return (
             <div className="container">
                 <div className="row flex-center full-height justify-content-center">
-                    <div className="col-md-7 ">
+                    <div className="col-12 col-md-7 ">
                         <CollapsePanel />
                     </div>
                 </div>

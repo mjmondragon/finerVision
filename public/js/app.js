@@ -62527,7 +62527,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row flex-center full-height justify-content-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-md-7 "
+        className: "col-12 col-md-7 "
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_CollapsePanel__WEBPACK_IMPORTED_MODULE_2__["default"], null))));
     }
   }]);
@@ -62687,13 +62687,18 @@ function (_Component) {
       phone: new _validate_input__WEBPACK_IMPORTED_MODULE_3__["default"](),
       gender: new _validate_input__WEBPACK_IMPORTED_MODULE_3__["default"](),
       dateBirth: new _validate_input_date__WEBPACK_IMPORTED_MODULE_4__["default"](),
-      comments: ""
+      comments: "",
+      isComplete: false,
+      hasValidationError: false
     };
     _this.handleToggleCollapse = _this.handleToggleCollapse.bind(_assertThisInitialized(_this));
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
     _this.handleChangeStep = _this.handleChangeStep.bind(_assertThisInitialized(_this));
     _this.sendForm = _this.sendForm.bind(_assertThisInitialized(_this));
     _this.validateForm = _this.validateForm.bind(_assertThisInitialized(_this));
+    _this.resetInputs = _this.resetInputs.bind(_assertThisInitialized(_this));
+    _this._renderValidationError = _this._renderValidationError.bind(_assertThisInitialized(_this));
+    _this._renderComplete = _this._renderComplete.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -62781,14 +62786,19 @@ function (_Component) {
     key: "handleChangeStep",
     value: function handleChangeStep() {
       var currentStep = this.state.currentStep;
+      var isValid;
 
       if (currentStep < 3) {
         currentStep += 1;
         this.setState({
           currentStep: currentStep
         });
-      } else if (this.validateForm()) {
+      } else if (isValid = this.validateForm()) {
         this.sendForm();
+      } else {
+        this.setState({
+          hasValidationError: !isValid
+        });
       }
     }
   }, {
@@ -62828,13 +62838,81 @@ function (_Component) {
         birthday: dateBirth.getDate(),
         comments: comments
       };
+      var self = this;
       axios.post('/client', params).then(function (response) {
+        var isComplete = true;
+        self.setState({
+          isComplete: isComplete
+        });
+        self.resetInputs();
         console.log(response);
       })["catch"](function (error) {
         console.log(error.response);
 
         if (error.response.status == 422) {}
       });
+    }
+  }, {
+    key: "resetInputs",
+    value: function resetInputs() {
+      var firstName = new _validate_input__WEBPACK_IMPORTED_MODULE_3__["default"]();
+      var lastName = new _validate_input__WEBPACK_IMPORTED_MODULE_3__["default"]();
+      var email = new _validate_input__WEBPACK_IMPORTED_MODULE_3__["default"]();
+      var phone = new _validate_input__WEBPACK_IMPORTED_MODULE_3__["default"]();
+      var gender = new _validate_input__WEBPACK_IMPORTED_MODULE_3__["default"]();
+      var dateBirth = new _validate_input_date__WEBPACK_IMPORTED_MODULE_4__["default"]();
+      var comments = "";
+      this.setState({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+        gender: gender,
+        dateBirth: dateBirth,
+        comments: comments
+      });
+    }
+  }, {
+    key: "_renderComplete",
+    value: function _renderComplete() {
+      var isComplete = this.state.isComplete;
+
+      if (isComplete) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "alert alert-success alert-dismissible fade show",
+          role: "alert"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Your details and comments have been added sucessfully!."), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button",
+          className: "close",
+          "data-dismiss": "alert",
+          "aria-label": "Close"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          "aria-hidden": "true"
+        }, "\xD7")));
+      }
+
+      return null;
+    }
+  }, {
+    key: "_renderValidationError",
+    value: function _renderValidationError() {
+      var hasValidationError = this.state.hasValidationError;
+
+      if (hasValidationError) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "alert alert-danger alert-dismissible fade show",
+          role: "alert"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "Some details are not valid"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          type: "button",
+          className: "close",
+          "data-dismiss": "alert",
+          "aria-label": "Close"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+          "aria-hidden": "true"
+        }, "\xD7")));
+      }
+
+      return null;
     }
   }, {
     key: "render",
@@ -62847,7 +62925,7 @@ function (_Component) {
       var gender = this.state.gender;
       var dateBirth = this.state.dateBirth;
       var comments = this.state.comments;
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this._renderValidationError(), this._renderComplete(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "panel bg-white"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "panel-header"
@@ -62948,7 +63026,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "date_birth"
       }, "Date of birth"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        "class": "display-flex"
+        className: "display-flex"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         id: "day",
@@ -63003,7 +63081,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-secondary",
         onClick: this.handleChangeStep
-      }, " Next >")))))));
+      }, " Next >"))))))));
     }
   }]);
 
